@@ -1,5 +1,10 @@
 <template>
   <div class="home">
+    <ProductDescriptionDrawer
+      :product="product"
+      :active="active.product_drawer"
+      v-on:close-product-drawer="closeProductDrawer()"
+    />
     <div class="product-cards-container">
       <ProductSummaryCard
         v-for="product in items"
@@ -14,21 +19,28 @@
 <script>
 import items from "../data/items";
 import ProductSummaryCard from "../components/products/ProductSummaryCard";
+import ProductDescriptionDrawer from "../components/products/ProductDescriptionDrawer";
 
 export default {
   name: "Home",
-  components: { ProductSummaryCard },
+  components: { ProductSummaryCard, ProductDescriptionDrawer },
   data() {
     return {
       items: items,
       product: null,
+      active: {
+        product_drawer: false,
+      },
     };
   },
   methods: {
     viewProduct(product) {
       this.product = product;
-
-      console.log(this.product.id);
+      this.active.product_drawer = true;
+      console.log(this.product);
+    },
+    closeProductDrawer() {
+      this.active.product_drawer = false;
     },
   },
 };
